@@ -865,6 +865,18 @@ export const ROUTES: RouteInfo[] = [
         role: [''],
         submenu: [],
       },
+      {
+        path: '/admin/settings/membership',
+        title: 'MENUITEMS.SETTINGS.LIST.MEMBERSHIPS',
+        iconType: '',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        role: [''],
+        submenu: [],
+      },
      /* {
         path: '/admin/departments/add-department',
         title: 'MENUITEMS.DEPARTMENTS.LIST.ADD-DEPARTMENT',

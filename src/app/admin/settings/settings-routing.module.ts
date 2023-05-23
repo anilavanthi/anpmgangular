@@ -8,6 +8,7 @@ import { OccupationComponent } from "./occupation/occupation.component";
 import { EducationdetailsComponent } from "./educationdetails/educationdetails.component";
 import {LanguagesComponent} from "./languages/languages.component";
 import {SourceComponent} from "./source/source.component";
+import { MemberShipComponent } from './membership/membership.component';
 import {StateComponent} from "./state/state.component";
 import { DistrictComponent } from './district/district.component';
 import { CityComponent } from './city/city.component';
@@ -62,6 +63,10 @@ const routes: Routes = [
   {
     path: 'city',
     component: CityComponent
+  },
+  {
+    path: 'membership',
+    component: MemberShipComponent
   },
 ];
 

@@ -68,6 +68,10 @@ import { SubCasteComponent } from './subcast/subcast.component';
 import { SubCasteService } from './subcast/subcast.service';
 import { AddSubCasteFormComponent } from './subcast/add/add-form/add-form.component';
 
+import { MemberShipComponent } from './membership/membership.component';
+import { MemberShipService } from './membership/membership.service';
+import { AddMemberShipFormComponent } from './membership/add/add-form/add-form.component';
+
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ComponentsModule } from './../../shared/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -98,7 +102,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CityComponent,
     AddCityFormComponent,
     SubCasteComponent,
-    AddSubCasteFormComponent
+    AddSubCasteFormComponent,
+    MemberShipComponent,
+    AddMemberShipFormComponent
   ],
   imports: [
     CommonModule,
@@ -138,7 +144,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     {provide:StateService},
     {provide:DistrictService},
     {provide:CityService},
-    {provide:SubCasteService}
+    {provide:SubCasteService},
+    {provide:MemberShipService}
     /*CountryService,
               BranchService*/],
 })

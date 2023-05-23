@@ -196,7 +196,6 @@ export class AddBranchFormComponent {
       this.branchNew.status =1;
       this.branchNew.user = this.userNew;
     
-
       //console.log(this.branchNew);
 
       this.branchService.addBranch(this.branchNew);

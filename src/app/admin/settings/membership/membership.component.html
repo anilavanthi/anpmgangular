@@ -12,7 +12,7 @@
               <div class="left">
                 <ul class="header-buttons-left ms-0">
                   <li class="tbl-title">
-                    <h2>Branches</h2>
+                    <h2>Memberships</h2>
                   </li>
                   <li class="tbl-search-box">
                     <label for="search-input"><i class="material-icons search-icon">search</i></label>
@@ -71,58 +71,89 @@
                     </mat-cell>
                   </ng-container>
                   <!-- ID Column -->
-                  <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Branch Name</mat-header-cell>
-                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">Branch Name:</span> {{row.name}}</mat-cell>
+                  <ng-container matColumnDef="code">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>code</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.code}}</mat-cell>
                   </ng-container>
-                  <ng-container matColumnDef="address">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Branch Address</mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.address}}</mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="mobile">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+                  <ng-container matColumnDef="planname">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Plan Name</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">Mobile:</span> {{row.user.phone}}</mat-cell>
+                      <span class="mobile-label">Plan Name</span> {{row.planname}}</mat-cell>
                   </ng-container>
-                  <ng-container matColumnDef="email">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                  <ng-container matColumnDef="plantype">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Plan Type</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">Email:</span> {{row.user.email}}</mat-cell>
+                      <span class="mobile-label">Plan Type</span> {{row.plantype}}</mat-cell>
                   </ng-container>
-                  <ng-container matColumnDef="state_name">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>State Name</mat-header-cell>
+                  <ng-container matColumnDef="duration">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Duration<br>(No.of Months)</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">State Name:</span> {{row.user.state_name}}</mat-cell>
+                      <ng-container *ngIf="row.duration !== 0; else elseBlock">
+                        <span class="mobile-label">Duration</span> {{row.duration}}
+                      </ng-container>
+                      <ng-template #elseBlock>
+                        <span class="mobile-label">Duration</span> Unlimited
+                      </ng-template>
+                    </mat-cell>
                   </ng-container>
-                  <ng-container matColumnDef="district_name">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>District</mat-header-cell>
+                  <ng-container matColumnDef="contactsno">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>No.of Contacts</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">District:</span> {{row.user.district_name}}</mat-cell>
+                      <span class="mobile-label">No.of Contacts</span> {{row.contactsno}}</mat-cell>
                   </ng-container>
-                  <ng-container matColumnDef="city_name">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Area</mat-header-cell>
+                  <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">Area:</span> {{row.user.city_name}}</mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="pincode">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Pincode</mat-header-cell>
-                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">PinCode:</span> {{row.user.pincode}}</mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="username">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>UserName</mat-header-cell>
-                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">UserName:</span> {{row.user.username}}</mat-cell>
+                      <span class="mobile-label">Amount</span> {{row.amount}}</mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="status">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Status
-                    </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <mat-slide-toggle class="example-margin" color="primary" [checked]="row.status==1" (click)="$event.stopPropagation()" (click)="statusItem(row)" >
+                      <mat-slide-toggle class="example-margin" color="primary" [checked]="row.status==1" (click)="$event.stopPropagation()" (click)="statusItem(row,'status')" >
                       </mat-slide-toggle>
                     </mat-cell>
-                    <!--                      <span class="mobile-label">Status:</span>{{row.status}}-->
+                  </ng-container>
+                  <ng-container matColumnDef="smsenable">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>SMS Enable</mat-header-cell>
+                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                      <mat-slide-toggle class="example-margin" color="primary" [checked]="row.smsenable==1" (click)="$event.stopPropagation()" (click)="statusItem(row,'sms')" >
+                      </mat-slide-toggle>
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="emailenable">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Email Enable</mat-header-cell>
+                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                      <mat-slide-toggle class="example-margin" color="primary" [checked]="row.emailenable==1" (click)="$event.stopPropagation()" (click)="statusItem(row,'email')" >
+                      </mat-slide-toggle>
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="personalassistance">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Personal Assitance Enable</mat-header-cell>
+                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                      <mat-slide-toggle class="example-margin" color="primary" [checked]="row.personalassistance==1" (click)="$event.stopPropagation()" (click)="statusItem(row,'passt')" >
+                      </mat-slide-toggle>
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="photozoom">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Photo Zoom Enable</mat-header-cell>
+                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                      <mat-slide-toggle class="example-margin" color="primary" [checked]="row.photozoom==1" (click)="$event.stopPropagation()" (click)="statusItem(row,'zoom')" >
+                      </mat-slide-toggle>
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="sendinterest">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Send Interest Enable</mat-header-cell>
+                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                      <mat-slide-toggle class="example-margin" color="primary" [checked]="row.sendinterest==1" (click)="$event.stopPropagation()" (click)="statusItem(row,'interest')" >
+                      </mat-slide-toggle>
+                    </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="profilesuggestions">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Profile Suggestions Enable</mat-header-cell>
+                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
+                      <mat-slide-toggle class="example-margin" color="primary" [checked]="row.profilesuggestions==1" (click)="$event.stopPropagation()" (click)="statusItem(row,'psugg')" >
+                      </mat-slide-toggle>
+                    </mat-cell>
                   </ng-container>
                   <!-- actions -->
                   <ng-container matColumnDef="actions">

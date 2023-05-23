@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CityService } from './city.service';
+import { MemberShipService } from './membership.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {  City } from './city.model';
+import { MemberShip } from './membership.model';
 import { DataSource } from '@angular/cdk/collections';
 import {
   MatSnackBar,
@@ -13,7 +13,7 @@ import {
 } from '@angular/material/snack-bar';
 import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AddCityFormComponent } from './add/add-form/add-form.component';
+import { AddMemberShipFormComponent } from './add/add-form/add-form.component';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UnsubscribeOnDestroyAdapter } from './../../../shared/UnsubscribeOnDestroyAdapter';
@@ -22,40 +22,46 @@ import { TableExportUtil } from 'src/app/shared/tableExportUtil';
 import { TableElement } from 'src/app/shared/TableElement';
 
 @Component({
-  selector: 'app-city',
-  templateUrl: './city.component.html',
-  styleUrls: ['./city.component.scss'],
+  selector: 'app-membership',
+  templateUrl: './membership.component.html',
+  styleUrls: ['./membership.component.scss'],
 })
-export class  CityComponent
+export class  MemberShipComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit
 {
   displayedColumns = [
     'select',
-    'code',
-    'name',
-    'country_name',
-    'state_name',
-    'district_name',
+    'planname',
+    'plantype',
+    'duration',
+    'contactsno',
+    'amount',
     'status',
+    'smsenable',
+    'emailenable',
+    'personalassistance',
+    'photozoom',
+    'sendinterest',
+    'profilesuggestions',
     'actions',
   ];
-  exampleDatabase?:  CityService;
+  exampleDatabase?:  MemberShipService;
   dataSource!: ExampleDataSource;
-  selection = new SelectionModel<City>(true, []);
+  selection = new SelectionModel<MemberShip>(true, []);
   id?: number;
-  city?: City;
+  membership?: MemberShip;
   breadscrums = [
     {
-      title: 'All Areas',
-      items: ['Area'],
+      title: 'All MemberShip',
+      items: [' MemberShip'],
       active: 'All',
     },
   ];
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
-    public cityService:  CityService,
+    public membershipService:  MemberShipService,
     private snackBar: MatSnackBar
   ) {
     super();
@@ -80,9 +86,9 @@ export class  CityComponent
     } else {
       tempDirection = 'ltr';
     }
-    const dialogRef = this.dialog.open(AddCityFormComponent, {
+    const dialogRef = this.dialog.open(AddMemberShipFormComponent, {
       data: {
-        city: this.city,
+        membership: this.membership,
         action: 'add',
       },
       direction: tempDirection,
@@ -92,7 +98,7 @@ export class  CityComponent
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
         this.exampleDatabase?.dataChange.value.push(
-          {...this.cityService.getDialogData(), status: 1}
+          {...this.membershipService.getDialogData(), status: 1}
         );
         /* this.exampleDatabase?.dataChange.value.unshift(
            {...this.countryService.getDialogData(), status: 1}
@@ -100,14 +106,14 @@ export class  CityComponent
         this.refreshTable();
         this.showNotification(
           'snackbar-success',
-          'Add City Successfully...!!!',
+          'Add MemberShip Successfully...!!!',
           'top',
           'center'
         );
       }
     });
   }
-  editCall(row: City) {
+  editCall(row: MemberShip) {
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -115,9 +121,9 @@ export class  CityComponent
     } else {
       tempDirection = 'ltr';
     }
-    const dialogRef = this.dialog.open(AddCityFormComponent, {
+    const dialogRef = this.dialog.open(AddMemberShipFormComponent, {
       data: {
-        city: row,
+        membership: row,
         action: 'edit',
       },
       direction: tempDirection,
@@ -132,13 +138,13 @@ export class  CityComponent
 
         if (foundIndex != null && this.exampleDatabase) {
           this.exampleDatabase.dataChange.value[foundIndex] =
-            this.cityService.getDialogData();
+            this.membershipService.getDialogData();
           // And lastly refresh table
 
           this.refreshTable();
           this.showNotification(
             'snackbar-success',
-            'Edit City Successfully...!!!',
+            'Edit MemberShip Successfully...!!!',
             'top',
             'center'
           );
@@ -147,7 +153,7 @@ export class  CityComponent
     });
   }
 
-  deleteItem(row: City) {
+  deleteItem(row: MemberShip) {
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -166,12 +172,12 @@ export class  CityComponent
     );
     // for delete we use splice in order to remove single object from DataService
     if (foundIndex != null && this.exampleDatabase) {
-      this.cityService.deleteCity(this.id);
+      this.membershipService.deleteMemberShip(this.id);
       this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
       this.refreshTable();
       this.showNotification(
         'snackbar-danger',
-        'Delete City Successfully...!!!',
+        'Delete MemberShip Successfully...!!!',
         'top',
         'center'
       );
@@ -180,7 +186,7 @@ export class  CityComponent
     // });
   }
 
-  statusItem(row: City) {
+  statusItem(row: MemberShip,type:string) {
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -199,12 +205,12 @@ export class  CityComponent
     );
     // for delete we use splice in order to remove single object from DataService
     if (foundIndex != null && this.exampleDatabase) {
-      this.cityService.statusCity(this.id);
+      this.membershipService.statusMemberShip(this.id,type);
       // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
       this.refreshTable();
       this.showNotification(
         'snackbar-info',
-        'Status Updated Successfully...!!!',
+        'Status MemberShip Successfully...!!!',
         'top',
         'center'
       );
@@ -241,7 +247,7 @@ export class  CityComponent
       // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
       // this.exampleDatabase?.dataChange.value.splice(index, 1);
       this.refreshTable();
-      this.selection = new SelectionModel<City>(true, []);
+      this.selection = new SelectionModel<MemberShip>(true, []);
     });
     this.showNotification(
       'snackbar-danger',
@@ -251,7 +257,7 @@ export class  CityComponent
     );
   }
   public loadData() {
-    this.exampleDatabase = new  CityService(this.httpClient);
+    this.exampleDatabase = new  MemberShipService(this.httpClient);
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
       this.paginator,
@@ -271,12 +277,19 @@ export class  CityComponent
     // key name with space add in brackets
     const exportData: Partial<TableElement>[] =
       this.dataSource.filteredData.map((x) => ({
-        'City code' : x.code,
-        'City Name': x.name,
-        'Country' : x.country,
-        'State' : x.state,
-        'District' : x.district,
+         'Plan Name': x.planname,
+         'Plan Type': x.plantype,
+         'Duration': x.duration,
+         'No. of Contacts': x.contactsno,
+         'Amount': x.amount,
         'Status': x.status,
+        'SMS Enable': x.smsenable,
+        'Email Enable': x.emailenable,
+        'Personal Assitance Enable': x.personalassistance,
+        'Photo Zoom Enable': x.photozoom,
+        'Send Interest Enable': x.sendinterest,
+        'Profile Suggestions Enable': x.profilesuggestions,
+
       }));
 
     TableExportUtil.exportToExcel(exportData, 'excel');
@@ -295,7 +308,7 @@ export class  CityComponent
     });
   }
   // context menu
-  onContextMenu(event: MouseEvent, item:  City) {
+  onContextMenu(event: MouseEvent, item:  MemberShip) {
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
@@ -306,7 +319,7 @@ export class  CityComponent
     }
   }
 }
-export class ExampleDataSource extends DataSource<City> {
+export class ExampleDataSource extends DataSource<MemberShip> {
   filterChange = new BehaviorSubject('');
   get filter(): string {
     return this.filterChange.value;
@@ -314,10 +327,10 @@ export class ExampleDataSource extends DataSource<City> {
   set filter(filter: string) {
     this.filterChange.next(filter);
   }
-  filteredData:  City[] = [];
-  renderedData:  City[] = [];
+  filteredData:  MemberShip[] = [];
+  renderedData:  MemberShip[] = [];
   constructor(
-    public exampleDatabase:  CityService,
+    public exampleDatabase:  MemberShipService,
     public paginator: MatPaginator,
     public _sort: MatSort
   ) {
@@ -326,7 +339,7 @@ export class ExampleDataSource extends DataSource<City> {
     this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
   }
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<City[]> {
+  connect(): Observable<MemberShip[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
       this.exampleDatabase.dataChange,
@@ -334,20 +347,26 @@ export class ExampleDataSource extends DataSource<City> {
       this.filterChange,
       this.paginator.page,
     ];
-    this.exampleDatabase.getCity();
+    this.exampleDatabase.getMemberShip();
     return merge(...displayDataChanges).pipe(
       map(() => {
         // Filter data
         this.filteredData = this.exampleDatabase.data
           .slice()
-          .filter((city:  City) => {
+          .filter((membership:  MemberShip) => {
             const searchStr = (
-              city.code +
-              city.name +
-              city.country_name +
-              city.state_name +
-              city.district_name +
-              city.status
+              membership.planname +
+              membership.plantype +
+              membership.duration +
+              membership.contactsno +
+              membership.amount +
+              membership.status +
+              membership.smsenable +
+              membership.emailenable +
+              membership.personalassistance +
+              membership.photozoom +
+              membership.sendinterest +
+              membership.profilesuggestions
             ).toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
@@ -367,7 +386,7 @@ export class ExampleDataSource extends DataSource<City> {
     // disconnect
   }
   /** Returns a sorted copy of the database data. */
-  sortData(data: City[]):  City[] {
+  sortData(data: MemberShip[]):  MemberShip[] {
     if (!this._sort.active || this._sort.direction === '') {
       return data;
     }
@@ -375,24 +394,42 @@ export class ExampleDataSource extends DataSource<City> {
       let propertyA: number | string = '';
       let propertyB: number | string = '';
       switch (this._sort.active) {
-        case 'code':
-          [propertyA, propertyB] = [a.code, b.code];
+        case 'planname':
+          [propertyA, propertyB] = [a.planname, b.planname];
           break;
-        case 'name':
-          [propertyA, propertyB] = [a.name, b.name];
-          break;
-        case 'country_name':
-          [propertyA, propertyB] = [a.country_name, b.country_name];
-          break;
-        case 'state_name':
-          [propertyA, propertyB] = [a.state_name, b.state_name];
-          break;
-        case 'district_name':
-          [propertyA, propertyB] = [a.district_name, b.district_name];
-          break;
+        case 'plantype':
+          [propertyA, propertyB] = [a.plantype, b.plantype];
+            break;
+        case 'duration':
+          [propertyA, propertyB] = [a.duration, b.duration];
+            break;
+        case 'contactsno':
+          [propertyA, propertyB] = [a.contactsno, b.contactsno];
+            break;
+        case 'amount':
+          [propertyA, propertyB] = [a.amount, b.amount];
+            break;
         case 'status':
           [propertyA, propertyB] = [a.status, b.status];
           break;
+        case 'smsenable':
+          [propertyA, propertyB] = [a.smsenable, b.smsenable];
+          break;
+        case 'emailenable':
+          [propertyA, propertyB] = [a.emailenable, b.emailenable];
+          break;
+        case 'personalassistance':
+          [propertyA, propertyB] = [a.personalassistance, b.personalassistance];
+          break;
+        case 'photozoom':
+          [propertyA, propertyB] = [a.photozoom, b.photozoom];
+          break;
+        case 'sendinterest':
+          [propertyA, propertyB] = [a.sendinterest, b.sendinterest];
+          break;  
+        case 'profilesuggestions':
+          [propertyA, propertyB] = [a.profilesuggestions, b.profilesuggestions];
+          break; 
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;

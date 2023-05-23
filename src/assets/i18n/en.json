@@ -74,7 +74,7 @@
         "COUNTRYS": "Country",
         "STATES": "State",
         "DISTRICTS": "District",
-        "CITIES" : "City",
+        "CITIES" : "Area",
         "BRANCHS": "Branch",
         "RELIGIONS": "Religion",
         "CASTES": "Caste",
@@ -82,7 +82,8 @@
         "OCCUPATIONS": "Occupation",
         "EDUCATIONS": "Education",
         "LANGUAGES": "Language",
-        "SOURCES": "Source"
+        "SOURCES": "Source",
+        "MEMBERSHIPS" : "MemberShip"
 
       }
     },
