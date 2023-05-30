@@ -12,7 +12,7 @@
             <h2> Staff Information</h2>
           </div>
           <div class="body">
-            <form class="m-4" [formGroup]="staffForm" (ngSubmit)="onSubmit()">
+            <form class="m-4" [formGroup]="staffForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
@@ -333,7 +333,6 @@
                   </mat-form-field>
                 </div>
               </div>
-
               <!-- <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
                   <label>SSC Certificate</label>
@@ -354,10 +353,7 @@
                   <label>Upload Pancard</label>
                   <app-file-upload formControlName="pancardUploadFile"></app-file-upload>
                 </div>
-                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
-                  <label>Upload Profile Picture</label>
-                  <app-file-upload formControlName="profilePicUploadFile"></app-file-upload>
-                </div>
+               
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
                   <label>Bank Passbook</label>
                   <app-file-upload formControlName="bankPassBookUploadFile"></app-file-upload>
@@ -382,7 +378,12 @@
                     </mat-error>
                   </mat-form-field>
                 </div>
-       
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                    <label>Upload Profile Picture</label>
+                    <input type="file" id="photo" name="photo" formControlName="photo" (change)="onFileSelected($event)"  accept="image/*" required>
+                  </div>
+                </div> 
               </div>
               <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">

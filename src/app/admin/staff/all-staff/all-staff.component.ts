@@ -8,6 +8,7 @@ import { Staff,StaffResponse,User } from '../staff.model';
 import { DataSource } from '@angular/cdk/collections';
 import { FormDialogComponent } from './dialog/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from './dialog/delete/delete.component';
+import { Router } from '@angular/router';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -62,7 +63,8 @@ export class AllstaffComponent
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public staffService: StaffService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     super();
   }
@@ -110,6 +112,13 @@ export class AllstaffComponent
       }
     });
   }
+
+  redirectToPage(rowId: number) {
+      this.router.navigate(['/admin/staff/about-staff', rowId]);
+    // Add more conditions for other pages if needed
+  }
+
+
   editCall(row: Staff) {
     this.id = row.id;
     let tempDirection: Direction;
@@ -147,6 +156,7 @@ export class AllstaffComponent
       }
     });
   }
+
   deleteItem(row: Staff) {
     this.id = row.id;
     let tempDirection: Direction;
@@ -155,29 +165,31 @@ export class AllstaffComponent
     } else {
       tempDirection = 'ltr';
     }
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: row,
-      direction: tempDirection,
-    });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-          (x) => x.id === this.id
-        );
-        // for delete we use splice in order to remove single object from DataService
-        if (foundIndex != null && this.exampleDatabase) {
-          this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-          this.refreshTable();
-          this.showNotification(
-            'snackbar-danger',
-            'Delete Record Successfully...!!!',
-            'bottom',
-            'center'
-          );
-        }
-      }
-    });
+    /* const dialogRef = this.dialog.open(DeleteDialogComponent, {
+       data: row,
+       direction: tempDirection,
+     });*/
+    // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+    //   if (result === 1) {
+    const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
+      (x) => x.id === this.id
+    );
+    // for delete we use splice in order to remove single object from DataService
+    if (foundIndex != null && this.exampleDatabase) {
+      this.staffService.deleteStaff(this.id);
+      this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+      this.refreshTable();
+      this.showNotification(
+        'snackbar-danger',
+        'Delete Branch Successfully...!!!',
+        'top',
+        'center'
+      );
+    }
+    //   }
+    // });
   }
+
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
@@ -196,21 +208,24 @@ export class AllstaffComponent
           this.selection.select(row)
         );
   }
+
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
     this.selection.selected.forEach((item) => {
+      console.log(item.id);
+      this.deleteItem(item);
       const index: number = this.dataSource.renderedData.findIndex(
         (d) => d === item
       );
       // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
-      this.exampleDatabase?.dataChange.value.splice(index, 1);
+      // this.exampleDatabase?.dataChange.value.splice(index, 1);
       this.refreshTable();
       this.selection = new SelectionModel<Staff>(true, []);
     });
     this.showNotification(
       'snackbar-danger',
       totalSelect + ' Record Delete Successfully...!!!',
-      'bottom',
+      'top',
       'center'
     );
   }

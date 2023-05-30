@@ -84,7 +84,18 @@
         "LANGUAGES": "Language",
         "SOURCES": "Source",
         "MEMBERSHIPS" : "MemberShip"
-
+      }
+    },
+    "BRANCHS": {
+      "TEXT": "Branch",
+      "LIST": {
+        "BRANCHS": "Branch"
+      }
+    },
+    "MEMBERSHIPS": {
+      "TEXT": "Membership",
+      "LIST": {
+        "MEMBERSHIPS": "Membership"
       }
     },
     "STAFF": {

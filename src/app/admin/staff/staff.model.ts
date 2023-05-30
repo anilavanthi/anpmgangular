@@ -27,6 +27,7 @@ export class StaffResponse{
       pexp:string;
       status:number;
       user! : User;
+//      photo : File;
       constructor(staff: Staff) {
         {
           this.id = staff.id;
@@ -51,6 +52,7 @@ export class StaffResponse{
           this.source = staff.source || '';
           this.pexp = staff.pexp || '';
           this.status =staff.status;
+         // this.photo = staff.photo;
         }
       }
     }

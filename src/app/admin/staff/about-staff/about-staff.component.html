@@ -12,7 +12,9 @@
           <div class="m-b-20">
             <div class="contact-grid">
               <div class="profile-header bg-dark">
-                <div class="user-name">Jayna Patil</div>
+                <div class="user-name">Jayna Patil
+                  <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+                </div>
                 <div class="name-center">Professor</div>
               </div>
               <img src="assets/images/user/usrbig2.jpg" class="user-img" alt="">

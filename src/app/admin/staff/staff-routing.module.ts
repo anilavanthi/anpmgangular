@@ -18,7 +18,7 @@ const routes: Routes = [
     component: EditStaffComponent
   },
   {
-    path: 'about-staff',
+    path: 'about-staff/:id',
     component: AboutStaffComponent
   }
 ];

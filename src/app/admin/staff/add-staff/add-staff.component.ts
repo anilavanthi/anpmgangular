@@ -61,6 +61,7 @@ export class AddStaffComponent {
   user!:User;
   userNew!:User;
   staffNew!:Staff;
+  file!:File;
   constructor(private fb: UntypedFormBuilder,
     private stateService: StateService,
     private countryService : CountryService,
@@ -116,6 +117,7 @@ export class AddStaffComponent {
         [Validators.email, Validators.minLength(5)],
       ],
       dob: ['', [Validators.required]],
+      photo:[''],
       education: [''],
       sscUploadFile: [''],
       higherUploadFile: [''],
@@ -126,7 +128,7 @@ export class AddStaffComponent {
     });
   }
   onSubmit() {
-    console.log('Form Value', this.staffForm.value);
+   // console.log('Form Value', this.staffForm.value);
     if(this.staffForm.value.password !== this.staffForm.value.conformPassword){
       this.showNotification(
         'snackbar-danger',
@@ -177,10 +179,12 @@ export class AddStaffComponent {
       this.staffNew.religion = this.staff.religion;
       this.staffNew.caste = this.staff.caste;
       this.staffNew.user= this.userNew; 
+      //this.staffNew.photo = this.staff.photo;
+    //  this.staffNew.photo = this.file;
 
-      // console.log(this.staffNew);
+     //console.log(this.staffNew);
 
-    this.staffService.addStaff(this.staffNew);
+  this.staffService.addStaff(this.staffNew,this.file);
 
     this.showNotification(
       'snackbar-success',
@@ -188,7 +192,7 @@ export class AddStaffComponent {
       'top',
       'center'
     );
-    this.router.navigate(['admin/dashboard/main']);
+   this.router.navigate(['admin/dashboard/main']);
   }
   onInput(event: any) {
     // Get input value and remove non-numeric characters
@@ -199,6 +203,12 @@ export class AddStaffComponent {
     // this.mobile = inputValue;
   }
   
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    this.file = file;
+    //this.staff.photo = file;
+}
+
   showNotification(
     colorName: string,
     text: string,
