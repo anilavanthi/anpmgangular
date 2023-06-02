@@ -94,8 +94,25 @@
                 </ng-container>
                 <ng-container matColumnDef="gender">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
-                  <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                    <span class="mobile-label">Gender:</span> {{row.gender}}</mat-cell>
+                  <!-- <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"> -->
+
+                    <mat-cell mat-cell *matCellDef="let row">
+                      <span class="mobile-label">Gender:</span>
+                      <div *ngIf="row.gender==='Male'">
+                        <span class="badge badge-solid-green">
+                          {{row.gender}}</span>
+                      </div>
+                      <div *ngIf="row.gender==='Female'">
+                        <span class="badge badge-solid-purple">
+                          {{row.gender}}</span>
+                      </div>
+                      <div *ngIf="row.gender==='other'">
+                        <span class="badge badge-solid-orange">
+                          {{row.gender}}</span>
+                      </div>
+                    </mat-cell>
+
+                    <!-- <span class="mobile-label">Gender:</span> {{row.gender}}</mat-cell> -->
                 </ng-container>
                 <!-- <ng-container matColumnDef="designation">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Designation</mat-header-cell>

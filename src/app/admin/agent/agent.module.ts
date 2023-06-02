@@ -28,6 +28,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AddFormComponent } from './all-agent/add/add-form/add-form.component';
 import { DeleteComponent } from './all-agent/add/delete/delete.component';
 import { AboutAgentComponent } from './about-agent/about-agent.component';
+
+import { ActiveAgentComponent } from './active-agent/active-agent.component';
+import { BannedAgentsComponent } from './banned-agents/banned-agents.component';
+import { EmailAgentUnverifiedComponent } from './email-agent-unverified/email-agent-unverified.component';
+import { MobileAgentUnverifiedComponent } from './mobile-agent-unverified/mobile-agent-unverified.component';
+
 @NgModule({
   declarations: [
     AllAgentComponent,
@@ -35,6 +41,10 @@ import { AboutAgentComponent } from './about-agent/about-agent.component';
     AddFormComponent,
     DeleteComponent,
     AboutAgentComponent,
+    ActiveAgentComponent,
+    BannedAgentsComponent,
+    EmailAgentUnverifiedComponent,
+    MobileAgentUnverifiedComponent
   
   ],
   imports: [

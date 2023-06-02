@@ -104,7 +104,11 @@
         "ALL-STAFF": "All Staff",
         "ADD-STAFF": "Add Staff",
         "EDIT-STAFF": "Edit Staff",
-        "ABOUT-STAFF": "About Staff"
+        "ABOUT-STAFF": "About Staff",
+        "ACTIVE-STAFFUSERS" : "Active Staff",
+        "BANNED-STAFFS" : "Banned Staff",
+        "EMAIL-STAFF-UNVERIFIED" : "Email Unverified Staff",
+        "MOBILE-STAFF-UNVERIFIED" : "Mobile Unverified Staff"
       }
     },
     "CUSTOMER": {
@@ -122,7 +126,11 @@
         "ALL-AGENTS": "All Agents",
         "ADD-AGENT": "Add Agent",
         "EDIT-AGENT": "Edit Agent",
-        "ABOUT-AGENT": "About Agent"
+        "ABOUT-AGENT": "About Agent",
+        "ACTIVE-AGENTUSERS" : "Active Agents",
+        "BANNED-AGENTS" : "Banned Agents",
+        "EMAIL-AGENT-UNVERIFIED" : "Email Unverified Agents",
+        "MOBILE-AGENT-UNVERIFIED" : "Mobile Unverified Agents"
       }
     },
     "HOLIDAY": {

@@ -29,6 +29,10 @@ import { StaffService } from './staff.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ActiveStaffComponent } from './active-staff/active-staff.component';
+import { BannedStaffComponent } from './banned-staff/banned-staff.component';
+import { EmailStaffUnverifiedComponent } from './email-staff-unverified/email-staff-unverified.component';
+import { MobileStaffUnverifiedComponent } from './mobile-staff-unverified/mobile-staff-unverified.component';
 @NgModule({
   declarations: [
     AllstaffComponent,
@@ -37,6 +41,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AddStaffComponent,
     EditStaffComponent,
     AboutStaffComponent,
+    ActiveStaffComponent,
+    BannedStaffComponent,
+    EmailStaffUnverifiedComponent,
+    MobileStaffUnverifiedComponent,
   ],
   imports: [
     CommonModule,
