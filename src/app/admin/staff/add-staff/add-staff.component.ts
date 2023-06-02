@@ -92,7 +92,7 @@ export class AddStaffComponent {
       religion : [''],
       caste : [''],
       eduType : [''],
-      qual : [''],
+      education : [''],
       aadharno : [''],
       fname : [''],
       fmobile : [''],
@@ -118,7 +118,6 @@ export class AddStaffComponent {
       ],
       dob: ['', [Validators.required]],
       photo:[''],
-      education: [''],
       sscUploadFile: [''],
       higherUploadFile: [''],
       aadharUploadFile: [''],
@@ -162,7 +161,7 @@ export class AddStaffComponent {
       this.staffNew.officeMobile = this.staff.officeMobile;
       this.staffNew.pemail = this.staff.pemail;
       this.staffNew.eduType = this.staff.eduType;
-      this.staffNew.qual = this.staff.qual;
+      this.staffNew.education = this.staff.education;
       this.staffNew.aadharno = this.staff.aadharno;
       this.staffNew.fname = this.staff.fname;
       this.staffNew.fmobile = this.staff.fmobile;

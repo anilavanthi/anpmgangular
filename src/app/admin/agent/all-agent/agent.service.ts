@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Agent } from './agent.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Agent,AgentResponse,User,SingleAgentResponse } from './agent.model';
+import { HttpClient, HttpErrorResponse,HttpHeaders  } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
+import {environment} from 'src/environments/environment';
+
 @Injectable()
 export class AgentService extends UnsubscribeOnDestroyAdapter {
-  private readonly API_URL = 'assets/data/agent.json';
+    private readonly API_URL = 'assets/data/agent.json';
   isTblLoading = true;
   dataChange: BehaviorSubject<Agent[]> = new BehaviorSubject<Agent[]>([]);
+  public staff$: BehaviorSubject<Agent[]> = new BehaviorSubject<Agent[]>([]);
   // Temporarily stores data from dialogs
   dialogData!: Agent;
   constructor(private httpClient: HttpClient) {
@@ -19,12 +22,15 @@ export class AgentService extends UnsubscribeOnDestroyAdapter {
   getDialogData() {
     return this.dialogData;
   }
+
+  
   /** CRUD METHODS */
-  getAllAgents(): void {
-    this.subs.sink = this.httpClient.get<Agent[]>(this.API_URL).subscribe({
+  getAgent(): void {
+    this.subs.sink = this.httpClient.get<AgentResponse>(environment.apiUrl+"/masters/agent/")
+      .subscribe({
       next: (data) => {
         this.isTblLoading = false;
-        this.dataChange.next(data);
+        this.dataChange.next(data.data);
       },
       error: (error: HttpErrorResponse) => {
         this.isTblLoading = false;
@@ -33,43 +39,44 @@ export class AgentService extends UnsubscribeOnDestroyAdapter {
     });
   }
 
-  addAgent(agent: Agent): void {
-    this.dialogData = agent;
 
-    this.httpClient.post(this.API_URL, agent)
+  getAgentData(id:number):Observable<SingleAgentResponse> {
+    return this.httpClient.get<SingleAgentResponse>(environment.apiUrl+"/masters/agent/"  + id)
+   }
+
+
+  addAgent(agent: Agent,photo:File): void {
+    this.dialogData = agent;
+    const formData: FormData = new FormData();
+    const jsonAgent = JSON.stringify(agent);
+    formData.append('photo', photo);
+    formData.append('data', jsonAgent);
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    this.httpClient.post(environment.apiUrl+"/masters/agent/", formData,{headers})
       .subscribe({
         next: (data) => {
-          this.dialogData = agent;
+         this.dialogData = agent;
+        //this.dialogData = formData.get('data');
         },
         error: (error: HttpErrorResponse) => {
-           // error code here
+          console.log(error);
         },
       });
   }
-  updateAgent(agent: Agent): void {
-    this.dialogData = agent;
 
-    // this.httpClient.put(this.API_URL + agent.id, agent)
-    //     .subscribe({
-    //       next: (data) => {
-    //         this.dialogData = agent;
-    //       },
-    //       error: (error: HttpErrorResponse) => {
-    //          // error code here
-    //       },
-    //     });
-  }
+ 
   deleteAgent(id: number): void {
-    console.log(id);
-
-    // this.httpClient.delete(this.API_URL + id)
-    //     .subscribe({
-    //       next: (data) => {
-    //         console.log(id);
-    //       },
-    //       error: (error: HttpErrorResponse) => {
-    //          // error code here
-    //       },
-    //     });
+    this.httpClient.delete(environment.apiUrl+"/masters/agent/" + id)
+      .subscribe({
+        next: (data) => {
+          console.log(id);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
+        },
+      });
   }
+
 }

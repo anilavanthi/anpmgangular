@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Staff,StaffResponse,User } from './staff.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Staff,StaffResponse,User,SingleStaffResponse } from './staff.model';
 import { HttpClient, HttpErrorResponse,HttpHeaders  } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import {environment} from 'src/environments/environment';
@@ -41,17 +41,23 @@ export class StaffService extends UnsubscribeOnDestroyAdapter {
     });
   }
 
-  getStaffData(id:number): void {
-    this.subs.sink = this.httpClient.get<StaffResponse>(environment.apiUrl+"/masters/staff/"  + id)
-      .subscribe({
-      next: (data) => {
-        this.staff$.next(data.data);
-      },
-      error: (error: HttpErrorResponse) => {
-        console.log(error.name + ' ' + error.message);
-      },
-    });
-  }
+  // getStaffData(id:number): void {
+  //   this.subs.sink = this.httpClient.get<StaffResponse>(environment.apiUrl+"/masters/staff/"  + id)
+  //     .subscribe({
+  //     next: (data) => {
+  //       this.staff$.next(data.data);
+  //     },
+  //     error: (error: HttpErrorResponse) => {
+  //       console.log(error.name + ' ' + error.message);
+  //     },
+  //   });
+  // }
+
+
+  getStaffData(id:number):Observable<SingleStaffResponse> {
+    return this.httpClient.get<SingleStaffResponse>(environment.apiUrl+"/masters/staff/"  + id)
+   }
+
 
   addStaff(staff: Staff,photo:File): void {
     this.dialogData = staff;

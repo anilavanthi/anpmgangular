@@ -27,12 +27,14 @@ import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AddFormComponent } from './all-agent/add/add-form/add-form.component';
 import { DeleteComponent } from './all-agent/add/delete/delete.component';
+import { AboutAgentComponent } from './about-agent/about-agent.component';
 @NgModule({
   declarations: [
     AllAgentComponent,
     AddAgentComponent,
     AddFormComponent,
     DeleteComponent,
+    AboutAgentComponent,
   
   ],
   imports: [

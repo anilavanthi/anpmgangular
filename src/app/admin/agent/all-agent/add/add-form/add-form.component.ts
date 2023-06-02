@@ -23,9 +23,9 @@ export interface DialogData {
 })
 export class AddFormComponent {
   action: string;
-  dialogTitle: string;
+  // dialogTitle: string;
   agentForm: UntypedFormGroup;
-  agent: Agent;
+  // agent: Agent;
   constructor(
     public dialogRef: MatDialogRef<AddFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -34,14 +34,14 @@ export class AddFormComponent {
   ) {
     // Set the defaults
     this.action = data.action;
-    if (this.action === 'edit') {
-      this.dialogTitle = data.agent.name;
-      this.agent = data.agent;
-    } else {
-      this.dialogTitle = 'New Agent';
-      const blankObject = {} as Agent;
-      this.agent = new Agent(blankObject);
-    }
+    // if (this.action === 'edit') {
+    //   this.dialogTitle = 'edit';
+    //   this.agent = data.agent;
+    // } else {
+    //   this.dialogTitle = 'New Agent';
+    //   const blankObject = {} as Agent;
+    //   this.agent = new Agent(blankObject);
+    // }
     this.agentForm = this.createContactForm();
   }
   formControl = new UntypedFormControl('', [
@@ -57,15 +57,15 @@ export class AddFormComponent {
   }
   createContactForm(): UntypedFormGroup {
     return this.fb.group({
-      id: [this.agent.id],
-      img: [this.agent.img],
-      name: [this.agent.name],
-      surname: [this.agent.surname],
-      gender: [this.agent.gender],
-      email: [
-        this.agent.email,
-        [Validators.required, Validators.email, Validators.minLength(5)],
-      ],
+     // id: [this.agent.id],
+      // img: [this.agent.img],
+      // name: [this.agent.name],
+      // surname: [this.agent.surname],
+      // gender: [this.agent.gender],
+      // email: [
+      //   this.agent.email,
+      //   [Validators.required, Validators.email, Validators.minLength(5)],
+      // ],
     });
   }
   submit() {
@@ -75,7 +75,7 @@ export class AddFormComponent {
     this.dialogRef.close();
   }
   public confirmAdd(): void {
-    this.agentService.addAgent(this.agentForm.getRawValue());
+    // this.agentService.addAgent(this.agentForm.getRawValue());
   }
 }
 

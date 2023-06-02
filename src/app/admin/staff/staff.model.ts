@@ -1,3 +1,7 @@
+export class SingleStaffResponse{
+  data! : Staff;
+  msg! : string;
+}
 
 export class StaffResponse{
     data : Staff[]=[];
@@ -13,7 +17,7 @@ export class StaffResponse{
       religion:number;
       caste: number;
       eduType:string;
-      qual: number;
+      education: number;
       aadharno:string;
       fname: string;
       fmobile:string;
@@ -26,8 +30,13 @@ export class StaffResponse{
       source:string;
       pexp:string;
       status:number;
+      education_name! : string;
+      source_name! : string;
+      branch_name! : string;
+      religion_name!:string;
+      caste_name!:string;
       user! : User;
-//      photo : File;
+      photo! : File;
       constructor(staff: Staff) {
         {
           this.id = staff.id;
@@ -38,7 +47,7 @@ export class StaffResponse{
           this.branch = staff.branch;
           this.religion = staff.religion;
           this.caste = staff.caste;
-          this.qual = staff.qual;
+          this.education = staff.education;
           this.eduType = staff.eduType || '';
           this.aadharno = staff.aadharno || '';
           this.fname = staff.fname || '';
@@ -70,6 +79,10 @@ export class StaffResponse{
         district: number;
         city:number;
         is_staff:number;
+        state_name! : string;
+        district_name! : string;
+        city_name! : string;
+        pincode!:string;
         constructor(user: User) {
           {
             this.id = user.id;

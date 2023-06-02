@@ -7,7 +7,9 @@ import { MatSort } from '@angular/material/sort';
 import { Agent } from './agent.model';
 import { DataSource } from '@angular/cdk/collections';
 import {AddFormComponent } from './add/add-form/add-form.component';
+import { FormDialogComponent } from '../../staff/all-staff/dialog/form-dialog/form-dialog.component';
 import { DeleteComponent } from './add/delete/delete.component';
+import { Router } from '@angular/router';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -38,8 +40,11 @@ export class AllAgentComponent
     'name',
     'surname',
     'gender',
+    // 'designation',
     'mobile',
     'email',
+    'date',
+    'username',
     'actions',
   ];
   exampleDatabase?: AgentService;
@@ -59,7 +64,8 @@ export class AllAgentComponent
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public agentService: AgentService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     super();
   }
@@ -83,7 +89,7 @@ export class AllAgentComponent
     } else {
       tempDirection = 'ltr';
     }
-    const dialogRef = this.dialog.open(AddFormComponent, {
+    const dialogRef = this.dialog.open(FormDialogComponent, {
       data: {
         agent: this.agent,
         action: 'add',
@@ -107,6 +113,13 @@ export class AllAgentComponent
       }
     });
   }
+
+  redirectToPage(rowId: number) {
+    this.router.navigate(['/admin/agent/about-agent', rowId]);
+  // Add more conditions for other pages if needed
+}
+
+
   editCall(row: Agent) {
     this.id = row.id;
     let tempDirection: Direction;
@@ -115,7 +128,7 @@ export class AllAgentComponent
     } else {
       tempDirection = 'ltr';
     }
-    const dialogRef = this.dialog.open(AddFormComponent, {
+    const dialogRef = this.dialog.open(FormDialogComponent, {
       data: {
         agent: row,
         action: 'edit',
@@ -233,11 +246,11 @@ export class AllAgentComponent
     // key name with space add in brackets
     const exportData: Partial<TableElement>[] =
       this.dataSource.filteredData.map((x) => ({
-        Name: x.name,
-        Surname: x.surname,
-        Gender: x.gender,
-        Mobile: x.mobile,
-        Email: x.email,
+        // Name: x.name,
+        // Surname: x.surname,
+        // Gender: x.gender,
+        // Mobile: x.mobile,
+        // Email: x.email,
 
       }));
 
@@ -297,7 +310,7 @@ export class ExampleDataSource extends DataSource<Agent> {
       this.filterChange,
       this.paginator.page,
     ];
-    this.exampleDatabase.getAllAgents();
+    this.exampleDatabase.getAgent();
     return merge(...displayDataChanges).pipe(
       map(() => {
         // Filter data
@@ -305,11 +318,14 @@ export class ExampleDataSource extends DataSource<Agent> {
           .slice()
           .filter((agent: Agent) => {
             const searchStr = (
-              agent.name +
-              agent.surname +
+              agent.user.first_name +
+              agent.user.last_name +
               agent.gender +
-              agent.email +
-              agent.mobile 
+              agent.user.state +
+              agent.user.email +
+              agent.user.phone +
+              agent.dob +
+              agent.user.address
               ).toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
@@ -340,21 +356,21 @@ export class ExampleDataSource extends DataSource<Agent> {
         case 'id':
           [propertyA, propertyB] = [a.id, b.id];
           break;
-        case 'name':
-          [propertyA, propertyB] = [a.name, b.name];
-          break;
-          case 'surname':
-            [propertyA, propertyB] = [a.surname, b.surname];
-            break;
-         case 'email':
-          [propertyA, propertyB] = [a.email, b.email];
-          break;
+        // case 'name':
+        //   [propertyA, propertyB] = [a.name, b.name];
+        //   break;
+        //   case 'surname':
+        //     [propertyA, propertyB] = [a.surname, b.surname];
+        //     break;
+        //  case 'email':
+        //   [propertyA, propertyB] = [a.email, b.email];
+        //   break;
           case 'gender':
             [propertyA, propertyB] = [a.gender, b.gender];
             break;
-        case 'mobile':
-          [propertyA, propertyB] = [a.mobile, b.mobile];
-          break;
+        // case 'mobile':
+        //   [propertyA, propertyB] = [a.mobile, b.mobile];
+        //   break;
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
