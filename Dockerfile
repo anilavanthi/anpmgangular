@@ -10,6 +10,7 @@ WORKDIR /app
 COPY ./ /app/
 
 # Install all the dependencies
+RUN npm install -g npm@latest
 RUN npm install
 
 # Generate the build of the application
@@ -23,6 +24,6 @@ FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /app/dist/smart /usr/share/nginx/html
-
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port 80
 EXPOSE 80
