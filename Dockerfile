@@ -7,16 +7,20 @@ FROM node:latest as build
 WORKDIR /app
 
 # Add the source code to app
+RUN npm cache clean --force
+COPY package.json ./
 COPY ./ /app/
 
 # Install all the dependencies
-RUN npm install -g npm@latest
+
+RUN npm install -g @angular/cli
 RUN npm install
+#RUN npm install
 
 # Generate the build of the application
+RUN ng version
+
 RUN npm run build
-
-
 # Stage 2: Serve app with nginx server
 
 # Use official nginx image as the base image
