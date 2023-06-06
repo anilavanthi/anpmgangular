@@ -7,7 +7,7 @@ FROM node:latest as build
 WORKDIR /app
 
 # Add the source code to app
-#RUN npm cache clean --force
+# RUN npm cache clean --force
 COPY package.json ./
 COPY ./ /app/
 
@@ -16,7 +16,7 @@ COPY ./ /app/
 RUN npm install -g @angular/cli
 RUN npm cache clean --force
 RUN npm install
-#RUN npm install
+# RUN npm install
 
 # Generate the build of the application
 RUN ng version
